@@ -5,6 +5,15 @@
 
 ![image](https://files.gitter.im/lubnaabd/cFAF/Screenshot-from-2018-12-27-15-08-56.png)
 
+### How to run website locally 
+- Clone this repository
+- ```cd list_items_task``` then run ```npm i```
+- ```cd client``` then run ```npm i```
+- Create database
+   - ```$ mysql``` 
+    - ```$ create database myapp_test```
+- Run project by```npm run dev``` 
+
 ### Tech stack
 - NodeJS 
 - FeathersJS
