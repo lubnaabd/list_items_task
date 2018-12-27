@@ -8,7 +8,7 @@ class ItemList extends Component {
   state = { }
 
   // get all name when render the page and put result in itemlist by function updateList
-  // and put first descrition in detail by function upDetails
+  // and put first descrition in detail by function updateDetails
   componentDidMount() {
     const { store } = this.props;
     axios
@@ -16,18 +16,19 @@ class ItemList extends Component {
       .then((data) => {
         const result = data.data;
         if (result.length) {
-          const { Description } = result[0];
+          const { Description, Name } = result[0];
           if (Description) {
-            store.upDetails(Description);
+            store.updateDetails(Name, Description);
           } else {
-            store.messageErrorDescripation('No Description this item');
+            // store.updateDetails(Name);
+            store.messageErrorDescripation(Name, 'No Description this item');
           }
           store.updateList(result);
         } else {
           store.messageError('No found data !!!');
         }
       })
-      .catch((error) => {        
+      .catch((error) => {
         const { status } = error.response;
         if (status === 204) {
           store.messageError('There are no Description !!!!');
@@ -74,6 +75,9 @@ class ItemList extends Component {
           </ul>
         </div>
         <div className="item__box--descripation">
+          <h1>
+            {store.name}
+          </h1>
           {store.Details}
         </div>
       </div>
