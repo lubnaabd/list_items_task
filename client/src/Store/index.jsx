@@ -13,8 +13,9 @@ class Store {
     this.itemlist = itemlist;
   }
 
-  // update Detail
-  upDetails=(Details) => {
+  // update Detail and name
+  updateDetails=(name, Details) => {
+    this.name = name;
     this.Details = Details;
   }
 
@@ -24,9 +25,10 @@ class Store {
     }
 
     // messageErrorDescripation
-    messageErrorDescripation=(MessageDescripation) => {
+    messageErrorDescripation=(name, MessageDescripation) => {
       this.MessageDescripation = MessageDescripation;
-      this.upDetails(MessageDescripation);
+      this.name = name;
+      this.updateDetails(name, MessageDescripation);
     }
 
   // get Detail by id
@@ -36,11 +38,12 @@ class Store {
       .get(`/items/${id}`)
       .then((data) => {
         const result = data.data;
-        const { Description } = result;
+        const { Description, Name } = result;
         if (Description) {
-          this.upDetails(Description);
+          this.updateDetails(Name, Description);
         } else {
-          this.messageErrorDescripation('No Description this item');
+          this.messageErrorDescripation(Name, 'No Description this item');
+          // this.updateDetails(Name, this.MessageDescripation);
         }
       })
       .catch((error) => {
@@ -55,10 +58,11 @@ class Store {
 decorate(Store, {
   itemlist: observable,
   Details: observable,
+  name: observable,
   Message: observable,
   MessageDescripation: observable,
   updateList: action,
-  upDetails: action,
+  updateDetails: action,
   getDetails: action,
   messageError: action,
 });
